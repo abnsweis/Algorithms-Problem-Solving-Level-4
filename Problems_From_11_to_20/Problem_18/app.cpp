@@ -117,8 +117,6 @@ IncludeEnd = false){
 }
 
 stDate GetSystemDate(){
-	
-	
 	time_t t = time(0);
 	tm* now = localtime(&t) ;
 	
