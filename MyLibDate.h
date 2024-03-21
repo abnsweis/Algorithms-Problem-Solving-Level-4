@@ -115,13 +115,13 @@ namespace MyLibDate {
 
 	// }
 
-	// // This function returns the name of the day according to index
-	// string GetDayNameByIndex(short index){
-	// 	string DaysName[7] = {"Sunday","Monday","Tuesday","Wednesday"
-	// 	,"Thursday","Friday","Saturday"};
-	// 	return DaysName[index];
-	// }
-	
+	// This function returns the name of the day according to index
+	string GetDayNameByIndex(short index){
+		string DaysName[7] = {"Sunday","Monday","Tuesday","Wednesday"
+		,"Thursday","Friday","Saturday"};
+		return DaysName[index];
+	}
+
 
 	bool isLastDayInMonthe(stDate Date) {
 
@@ -193,5 +193,56 @@ namespace MyLibDate {
 
 
 		return IncludeEnd ? ++CounterDays * SwapFlagValue: CounterDays *SwapFlagValue;
+
+
 	}
+	short DayOfWeekOrder(short year, short Month, short day) {
+		short a = (14 - Month)/ 12;
+		short y = year - a;
+		short m = Month + (12*a) - 2;
+
+		short DayOfWeek = (day + y + (y/4) - (y/100) + (y/400) + ((31*m)/12))%7;
+		return DayOfWeek;
+
+	}
+
+	short DayOfWeekOrder(stDate Date) {
+		return DayOfWeekOrder(Date.Year, Date.Month, Date.Day);
+
+	}
+	bool IsItEndOfWeek(stDate Date) {
+		short IndexDayWeek = DayOfWeekOrder(Date);
+		return IndexDayWeek == 6;
+	}
+
+	bool IsWeekEnd(stDate Date) {
+		short IndexDayWeek = DayOfWeekOrder(Date);
+		return IndexDayWeek == 5 || IndexDayWeek == 6;
+	}
+
+	bool isBusinessDay(stDate Date) {
+		return !IsWeekEnd(Date);
+	}
+	short DaysUntilEndOfWeek(stDate Date) {
+		return 6 - DayOfWeekOrder(Date);
+
+	}
+	short DaysUntilEndOfMonth(stDate Date) {
+		stDate EndOfMonthDate;
+		EndOfMonthDate.Day = NumberOfDaysInMonth(Date.Month, Date.Year);
+		EndOfMonthDate.Month = Date.Month;
+		EndOfMonthDate.Year = Date.Year;
+
+		return DaysDifferenceBetweenTwoDates(Date, EndOfMonthDate);
+	}
+	short DaysUntilEndOfYear(stDate Date) {
+		stDate EndOfMonthDate;
+		EndOfMonthDate.Day = 31;
+		EndOfMonthDate.Month = 12;
+		EndOfMonthDate.Year = Date.Year;
+
+		return DaysDifferenceBetweenTwoDates(Date, EndOfMonthDate);
+
+	}
+
 }
