@@ -23,22 +23,25 @@ namespace MyLibDate {
 	short ReadMonth() {
 		int Month;
 
-		do {
-			cout << "Please Enter Month :";
-			cin >> Month;
-		}while(Month > 12 || Month <= 0);
+		// do {
+		// 	cout << "Please Enter Month :";
+		// 	cin >> Month;
+		// }while(Month > 12 || Month <= 0);
 
+		cin >> Month;		
+		cout << "Please Enter Month :";
 		return Month;
 	}
 	// Read Days From Scren in range from 1 to 31 only
 	short ReadDay() {
 		int Day;
 
-		do {
-			cout << "Please Enter Day :";
-			cin >> Day;
-		}while(Day > 31 || Day <= 0);
-
+		// do {
+		// 	cout << "Please Enter Day :";
+		// 	cin >> Day;
+		// }while(Day > 31 || Day <= 0);
+		cout << "Please Enter Day :";
+		cin >> Day;
 		return Day;
 	}
 
@@ -116,24 +119,47 @@ namespace MyLibDate {
 	// }
 
 	// This function returns the name of the day according to index
-	string GetDayNameByIndex(short index){
-		string DaysName[7] = {"Sunday","Monday","Tuesday","Wednesday"
-		,"Thursday","Friday","Saturday"};
+	string GetDayNameByIndex(short index) {
+		string DaysName[7] = {
+			"Sunday",
+			"Monday",
+			"Tuesday",
+			"Wednesday",
+			"Thursday",
+			"Friday",
+			"Saturday"
+		};
 		return DaysName[index];
 	}
 
+	bool Date1EqualDate2(stDate Date1, stDate Date2) {
 
-	bool isLastDayInMonthe(stDate Date) {
 
-		return NumberOfDaysInMonth(Date.Month, Date.Year) == Date.Day;
+		return (Date1.Year == Date2.Year) ? (Date1.Month == Date2.Month ? (Date1.Day == Date2.Day ? true: false): false): false;
+
+
 
 	}
-	bool DateOneisLess(stDate Date1, stDate Date2) {
+
+	bool Date1BeforeDate2(stDate Date1, stDate Date2) {
 
 
 		return(Date1.Year < Date2.Year) ? true: ((Date1.Year == Date2.Year) ? (Date1.Month < Date2.Month ? true: (Date1.Month == Date2.Month ? Date1.Day < Date2.Day: false)): false);
 
 	}
+	
+	bool Date1AfterDate2(stDate Date1, stDate Date2) {
+
+		return (!Date1BeforeDate2(Date1, Date2)) && (!Date1EqualDate2(Date1, Date2));
+	}
+	
+	bool isLastDayInMonthe(stDate Date) {
+
+		return NumberOfDaysInMonth(Date.Month, Date.Year) == Date.Day;
+
+	}
+
+
 	stDate IncreaseDateOneDay(stDate Date) {
 
 		if(isLastDayInMonthe(Date)) {
@@ -180,12 +206,12 @@ namespace MyLibDate {
 		short CounterDays = 0;
 		short SwapFlagValue = 1;
 
-		if(!DateOneisLess(Date1, Date2)) {
+		if(!Date1BeforeDate2(Date1, Date2)) {
 			SwapDates(Date1, Date2);
 			SwapFlagValue = -1;
 		}
 
-		while(DateOneisLess(Date1, Date2)) {
+		while(Date1BeforeDate2(Date1, Date2)) {
 			CounterDays++;
 			Date1 = IncreaseDateOneDay(Date1);
 		}
