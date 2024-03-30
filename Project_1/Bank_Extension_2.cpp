@@ -29,7 +29,7 @@ struct stUser{
 };
 stUser UserLogin;
 static string UsersFileName = "./Users.txt";
-static string ClientsFileName = "./clients.txt";
+static string ClientsFileName = "../clients.txt";
 enum enMainMenuOptions {
 	eShowAllClients=1,
 	eAddNewClients=2,
@@ -778,6 +778,9 @@ void Deposit(string AccountNumber,int Amount){
 	
 	
 }
+
+
+
 // Deposit Screen
 void ShowDepositScreen(){
 	cout << "======================================" << endl;
